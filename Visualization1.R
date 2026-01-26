@@ -97,11 +97,14 @@ dat |>
              size = 3, alpha = 1/2)+ 
   theme_classic()
 
-
-
 ## Histogram of eno colored by mouse allergic status
 dat |>
   ggplot(aes(x = eno)) +
   geom_histogram(aes(fill = mopos), bins = 15)+ 
   theme_classic()
 
+## Make separate scatterplots for mouse allergic status
+dat |>
+  ggplot(aes(x = pm25, y = eno)) +
+  geom_point() +
+  facet_wrap(vars(mopos))
