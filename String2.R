@@ -25,7 +25,7 @@ competitions |>
     select(matches("venue[a-zA-Z]+"))
 
 ## Take a random sample of competitions
-set.seed(2025-02-24)
+set.seed(2026-02-21)
 competitions |>
     filter(countryId == "USA") |>
     select(matches("venue[a-zA-Z]+")) |>
