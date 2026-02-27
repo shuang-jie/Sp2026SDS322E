@@ -1,7 +1,18 @@
 ## Sentiment analysis
 
 library(tidyverse)
+if (!requireNamespace("tidytext", quietly = TRUE)) {
+  install.packages("tidytext")
+}
+if (!requireNamespace("wordcloud", quietly = TRUE)) {
+    install.packages("wordcloud")
+}
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+    install.packages("RColorBrewer")
+}
 library(tidytext)
+library(wordcloud)
+library(RColorBrewer)
 
 brothers <- read_lines("https://raw.githubusercontent.com/shuang-jie/Sp2026SDS322E/main/pg28054.txt.gz")
 head(brothers, 200)
@@ -40,14 +51,6 @@ book_words |>
     arrange(desc(n))
 
 ## Word frequency Cloud
-if (!requireNamespace("wordcloud", quietly = TRUE)) {
-    install.packages("wordcloud")
-}
-if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
-    install.packages("RColorBrewer")
-}
-library(wordcloud)
-library(RColorBrewer)
 word_freq <- book_words |> count(word, sort = TRUE)
 wordcloud(words = word_freq$word,
           freq = word_freq$n,
