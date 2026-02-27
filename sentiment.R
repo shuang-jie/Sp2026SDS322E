@@ -2,7 +2,7 @@
 
 library(tidyverse)
 if (!requireNamespace("tidytext", quietly = TRUE)) {
-  install.packages("tidytext")
+    install.packages("tidytext")
 }
 if (!requireNamespace("wordcloud", quietly = TRUE)) {
     install.packages("wordcloud")
@@ -69,8 +69,17 @@ stoplist <- stop_words |>
     filter(lexicon == "onix") |> 
     distinct()
 
+word_freq2 <- book_words |> 
+    anti_join(stoplist, by = "word")|> count(word, sort = TRUE)
+wordcloud(words = word_freq2$word,
+          freq = word_freq2$n,
+          max.words = 80,
+          colors = brewer.pal(8, "Dark2"))
+
+
 book_words |> 
     anti_join(stoplist, by = "word")
+
 
 ## Word sentiment list
 sentiments |> 
@@ -124,7 +133,7 @@ gatsby <- read_lines("https://raw.githubusercontent.com/shuang-jie/Sp2026SDS322E
 
 dat <- bind_rows(
     tibble(text = brothers,
-              book = "brothers karamazov"),
+           book = "brothers karamazov"),
     tibble(text = gatsby,
            book = "great gatsby")
 )
