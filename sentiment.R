@@ -1,9 +1,6 @@
 ## Sentiment analysis
 
 library(tidyverse)
-if (!requireNamespace("tidytext", quietly = TRUE)) {
-  install.packages("tidytext")
-}
 library(tidytext)
 
 brothers <- read_lines("https://raw.githubusercontent.com/shuang-jie/Sp2026SDS322E/main/pg28054.txt.gz")
@@ -41,6 +38,21 @@ book_words |>
     group_by(word) |> 
     summarize(n = n()) |> 
     arrange(desc(n))
+
+## Word frequency Cloud
+if (!requireNamespace("wordcloud", quietly = TRUE)) {
+    install.packages("wordcloud")
+}
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+    install.packages("RColorBrewer")
+}
+library(wordcloud)
+library(RColorBrewer)
+word_freq <- book_words |> count(word, sort = TRUE)
+wordcloud(words = word_freq$word,
+          freq = word_freq$n,
+          max.words = 100,
+          colors = brewer.pal(8, "Dark2"))
 
 ## Remove stop words
 stop_words
@@ -137,9 +149,3 @@ dat |>
     geom_text(aes(label = word)) +
     theme_bw() + 
     labs(x = NULL, y = "Difference in Word Use (Gatsby - Brothers)")
-    
-
-
-
-
-
